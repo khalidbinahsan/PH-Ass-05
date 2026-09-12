@@ -1,4 +1,5 @@
 import Logo from '../assets/images/logo.png'
+
 const Header = () => {
   const navLinks = [
     { name: 'Home', href: '#', active: true },
@@ -12,6 +13,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-white border-b border-gray-50 shadow-sm font-sans">
       <div className="max-w-[1216px] mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
+          
           <div className="flex flex-1 items-center md:hidden">
             <div className="text-gray-700">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -21,8 +23,13 @@ const Header = () => {
           </div>
 
           <div className="flex-shrink-0 flex items-center justify-center md:justify-start">
-            <a href="/" className="flex items-center">
+            {/* Added gap-2.5 to space the logo and text */}
+            <a href="/" className="flex items-center gap-2.5">
               <img src={Logo} alt="Logo" className="h-6 sm:h-8 w-auto" />
+              {/* Added Brand Name */}
+              <span className="text-[22px] font-bold text-gray-900 tracking-tight">
+                Dev<span className="text-[#DB2777]"> Stack</span>
+              </span>
             </a>
           </div>
 
@@ -33,6 +40,7 @@ const Header = () => {
               </a>
             ))}
           </nav>
+          
           <div className="flex flex-1 items-center justify-end space-x-3 sm:space-x-6 md:flex-none">
             <a href="#signin" className="text-[13px] sm:text-[15px] font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Sign In
