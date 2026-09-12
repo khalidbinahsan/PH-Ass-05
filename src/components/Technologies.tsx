@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Technology {
   id: string;
@@ -35,14 +37,37 @@ const TechCatalog = () => {
   const addToStack = (tech: Technology) => {
     if (!stack.some((item) => item.id === tech.id)) {
       setStack([...stack, tech]);
+      toast.success(`${tech.name} added to your stack!`, {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    } else {
+      toast.warn(`${tech.name} is already in your stack!`, {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
     }
   };
 
   const removeFromStack = (id: string) => {
+    const removedTech = stack.find((item) => item.id === id);
     setStack(stack.filter((item) => item.id !== id));
+    
+    if (removedTech) {
+      toast.info(`${removedTech.name} removed.`, {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
   };
 
-  const clearStack = () => setStack([]);
+  const clearStack = () => {
+    setStack([]);
+    toast.error("All technologies removed from stack.", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+  };
 
   return (
     <section className="max-w-[1216px] mx-auto px-4 sm:px-6 py-20 font-sans">
@@ -58,7 +83,6 @@ const TechCatalog = () => {
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">
         
-        {/* Left: Technology Grid or Loader */}
         <div className="flex-1 w-full">
           {isLoading ? (
             <div className="w-full flex items-center justify-center py-32">
@@ -106,7 +130,6 @@ const TechCatalog = () => {
           )}
         </div>
 
-        {/* Right: Sticky Sidebar */}
         <div className="w-full lg:w-[340px] sticky top-28 bg-white border border-gray-100 shadow-sm rounded-[20px] p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-1">Your Stack</h3>
           <p className="text-[13px] text-gray-500 mb-6">{stack.length} Technology Selected</p>
@@ -142,6 +165,7 @@ const TechCatalog = () => {
         </div>
 
       </div>
+      <ToastContainer />
     </section>
   );
 };
