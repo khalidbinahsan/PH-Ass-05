@@ -17,23 +17,13 @@ const TechCatalog = () => {
   const [technologies, setTechnologies] = useState<Technology[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [stack, setStack] = useState<Technology[]>([]);
-
-  useEffect(() => {
-    const fetchTechnologies = async () => {
-      try {
-        const response = await fetch('/technologies.json');
-        const data = await response.json();
-        setTechnologies(data);
-      } catch (error) {
-        console.error("Failed to fetch technologies:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchTechnologies();
-  }, []);
-
+  const fetchTechnologies = async () => {
+    const res = await fetch('/technologies.json');
+    const data = await res.json();
+    setTechnologies(data);
+    setIsLoading(false);
+  }
+  fetchTechnologies();
   const addToStack = (tech: Technology) => {
     if (!stack.some((item) => item.id === tech.id)) {
       setStack([...stack, tech]);
@@ -120,7 +110,7 @@ const TechCatalog = () => {
                     </div>
                   </div>
 
-                  <button onClick={() => addToStack(tech)} disabled={stack.some((item) => item.id === tech.id)} className="w-full py-2.5 rounded-lg text-[14px] font-semibold text-white bg-[#0F172A] hover:bg-gray-800 disabled:bg-gray-200 disabled:text-gray-500 transition-colors">
+                  <button onClick={() => addToStack(tech)} className={`w-full cursor-pointer py-2.5 rounded-lg text-[14px] font-semibold transition-colors ${stack.some((item) => item.id === tech.id) ? 'bg-gray-200 text-gray-500' : 'text-white bg-[#0F172A] hover:bg-gray-800'}`}>
                     {stack.some((item) => item.id === tech.id) ? 'Added to Stack' : 'Add to Stack'}
                   </button>
 
@@ -149,7 +139,7 @@ const TechCatalog = () => {
                     <h4 className="text-[14px] font-bold text-gray-900 truncate">{item.name}</h4>
                     <p className="text-[11px] text-gray-500 truncate">{item.category}</p>
                   </div>
-                  <button onClick={() => removeFromStack(item.id)} className="text-gray-400 hover:text-red-500 transition-colors p-1">
+                  <button onClick={() => removeFromStack(item.id)} className="text-gray-400 cursor-pointer hover:text-red-500 transition-colors p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
@@ -158,7 +148,7 @@ const TechCatalog = () => {
           </div>
 
           {stack.length > 0 && (
-            <button onClick={clearStack} className="w-full py-2.5 rounded-lg text-[14px] font-semibold text-red-500 bg-white border border-red-200 hover:bg-red-50 transition-colors">
+            <button onClick={clearStack} className="w-full cursor-pointer py-2.5 rounded-lg text-[14px] font-semibold text-red-500 bg-white border border-red-200 hover:bg-red-50 transition-colors">
               Remove All
             </button>
           )}
