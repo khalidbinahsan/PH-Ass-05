@@ -111,7 +111,7 @@ const TechCatalog = () => {
                   </div>
 
                   <button onClick={() => addToStack(tech)} className={`w-full cursor-pointer py-2.5 rounded-lg text-[14px] font-semibold transition-colors ${stack.some((item) => item.id === tech.id) ? 'bg-gray-200 text-gray-500' : 'text-white bg-[#0F172A] hover:bg-gray-800'}`}>
-                    {stack.some((item) => item.id === tech.id) ? 'Added to Stack' : 'Add to Stack'}
+                    {stack.some((item) => item.id === tech.id) ? '✓ Added to Stack' : 'Add to Stack'}
                   </button>
 
                 </div>
